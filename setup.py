@@ -1,12 +1,18 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='your-package-name',
+    name='emsimsirenpinn',
     version='0.1.0',
-    description='A short description of your package',
-    packages=find_packages(where='src'), # If using src directory
-    package_dir={'': 'src'}, # If using src directory
-    install_requires=[
-        'dependency-package-name',
+    author='Shuhua Hu',
+    author_email='hushuhua37@gmail.com',
+    description='2D EM simulation using PINN with SIREN framework',
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
+    url='https://github.com/shuhuah/EMSimSirenPINN',
+    packages=find_packages(),
+    classifiers=[
+        'Programming Language :: Python :: 3',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
     ],
 )

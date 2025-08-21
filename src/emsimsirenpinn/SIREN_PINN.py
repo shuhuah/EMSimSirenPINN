@@ -332,8 +332,6 @@ class PINN(torch.nn.Module):
         dudz = fwd_gradients(u_cmplx, z, 
                             device=self.device, 
                             DEBUG_FLAG=self.DEBUG_FLAG)
-# (2.0/range[1]) * 
-# (2.0/range[0]) * 
 
         if self.DEBUG_FLAG:
             print("self.A.shape", self.A.shape, "self.B.shape", self.B.shape)
@@ -349,8 +347,6 @@ class PINN(torch.nn.Module):
                                 device=self.device, 
                                 DEBUG_FLAG=self.DEBUG_FLAG)
 
-# (2.0/range[1]) * 
-#  (2.0/range[0]) * 
 
         if self.DEBUG_FLAG:
             print("dudxx shape:", dudxx.shape, dudxx.dtype)
@@ -362,41 +358,6 @@ class PINN(torch.nn.Module):
         f_loss = self.C * self.omega * self.omega * self.m * u_cmplx \
             +  dudxx \
             +  dudzz - 1j * right_side
-        # - torch.complex( torch.zeros_like(right_side), right_side)
-# + (2.0/range) * (2.0/range) * dudxx + (2.0/range) * (2.0/range) * dudzz
-
-# 0:: More steps
-# 2:: Shape to 200, 200, source 80, 80, f 8->5
-# 3:: Shape to 200, 200, source 80, 80, f 8->5, Scaling applied to f_loss
-
-# 1. Remove scaling
-# 2. Remove real part of source
-
-
-        # dudx = torch.autograd.grad(u_cmplx, x, grad_outputs=torch.ones_like(u_cmplx), create_graph=True)[0]
-        # dudz = torch.autograd.grad(u_cmplx, z, grad_outputs=torch.ones_like(u_cmplx), create_graph=True)[0]
-
-        # u_xx = []
-        # for i in range(x.shape[1]):
-        #     grad_i = dudx[:, i].unsqueeze(1)
-        #     grad2_i = torch.autograd.grad(grad_i, x, grad_outputs=torch.ones_like(grad_i), create_graph=True)[0][:, i].unsqueeze(1)
-        #     u_xx.append(grad2_i)
-        # dudxx = torch.sum(torch.cat(u_xx, dim=1), dim=1, keepdim=True)
-        # u_zz = []
-        # for i in range(z.shape[1]):
-        #     grad_i = dudz[:, i].unsqueeze(1)
-        #     grad2_i = torch.autograd.grad(grad_i, z, grad_outputs=torch.ones_like(grad_i), create_graph=True)[0][:, i].unsqueeze(1)
-        #     u_zz.append(grad2_i)
-        # dudzz = torch.sum(torch.cat(u_zz, dim=1), dim=1, keepdim=True)
-
-
-
-        # right_side = self.omega * self.ps
-        # f_loss = self.C * self.omega * self.omega * self.m * u_cmplx \
-        #           + self.da_dx * dudx + self.A * dudxx + self.db_dy * dudz + self.B * dudzz \
-        #           - 1j*right_side
-        #         #   - torch.complex( torch.zeros_like(right_side), right_side)
-
     
         return u_real, u_imag, f_loss
     

@@ -1,0 +1,16 @@
+# ESSP.toml
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "emsimsirenpinn"
+version = "0.0.1"
+authors = [
+  { name="Shuhua Hu", email="hushuhua37@gmail.com" },
+]
+description = "2D EM simulation using PINN with SIREN framework"
+readme = "README.md"
+requires-python = ">=3.8"
+# Add any dependencies your package needs to run

@@ -1,0 +1,6 @@
+# Python-specific ignore rules
+__pycache__/
+*.egg-info/
+
+# Git-specific ignore rule (optional, but good practice)
+.git/
